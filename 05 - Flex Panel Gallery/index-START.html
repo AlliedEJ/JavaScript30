@@ -27,6 +27,7 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+      display: flex;
     }
 
     .panel {
@@ -44,20 +45,34 @@
       font-size: 20px;
       background-size: cover;
       background-position: center;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
     }
 
-    .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
-    .panel2 { background-image:url(https://source.unsplash.com/rFKUFzjPYiQ/1500x1500); }
+    .panel1 { background-image:url(https://images.pexels.com/photos/16698583/pexels-photo-16698583/free-photo-of-man-in-t-shirt.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1); }
+    .panel2 { background-image:url(https://images.pexels.com/photos/15236842/pexels-photo-15236842/free-photo-of-woman-at-ruins-of-library-of-celsus.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1); }
     .panel3 { background-image:url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d); }
-    .panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
-    .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
+    .panel4 { background-image:url(https://images.pexels.com/photos/27594906/pexels-photo-27594906/free-photo-of-black-and-white-photo-of-roses-in-a-garden.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1); }
+    .panel5 { background-image:url(https://images.pexels.com/photos/27352740/pexels-photo-27352740/free-photo-of-a-woman-standing-on-the-stairs-of-the-cubuklu-silolar-beykoz-turkey.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1); }
 
     /* Flex Children */
     .panel > * {
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
+      flex: 1 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+
+    .panel > *:first-child {transform: translateY(-100%)}
+    .panel.open-active > *:first-child {transform: translateY(0)}
+    .panel > *:last-child {transform: translateY(100%)}
+    .panel.open-active > *:last-child {transform: translateY(0)}
 
     .panel p {
       text-transform: uppercase;
@@ -71,6 +86,7 @@
     }
 
     .panel.open {
+      flex: 5;
       font-size: 40px;
     }
 
@@ -106,10 +122,21 @@
   </div>
 
   <script>
+    const panels = document.querySelectorAll(".panel")
 
+    function toggleClass () {
+      this.classList.toggle('open');
+    }
+    
+    function toggleActive (e) {
+      if(e.propertyName.includes(`flex`)){
+        this.classList.toggle('open-active');
+      }
+    }
+
+    panels.forEach((panel) => {panel.addEventListener("click", toggleClass)})
+    panels.forEach((panel) => {panel.addEventListener("transitionend", toggleActive)})
   </script>
-
-
 
 </body>
 </html>
